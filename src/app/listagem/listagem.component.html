@@ -1,0 +1,19 @@
+<header class="jumbotron">
+  <h1 class="text-center">{{title}}</h1>
+</header>
+<main class="container">
+  <div class="row mb-4">
+    <div class="col-12">
+        <a routerLink="/cadastro" class="btn btn-primary">Nova foto</a>
+    </div>
+  </div>
+  <div class="row">
+    <card *ngFor="let foto of listaFotos; let i = index" [dados]="foto" class="col-md-4 mb-4">
+      <a [routerLink]="['/editar' ,foto._id]" class="foto">
+        <foto [url]="foto.url" [titulo]="foto.titulo"></foto>
+      </a>
+
+      <button class="btn btn-danger" (click)="excluir(foto, i)">Apagar</button>
+    </card>
+  </div> 
+</main>
