@@ -8,21 +8,25 @@
 
 			<div class="form-group">
 				<label for="">Título</label>
-				<input type="text" class="form-control" required>
-				<p  class="alert alert-danger">Campo obrigatório</p>
+				<input type="text" formControlName="titulo" class="form-control" required>
+				<div *ngIf="titulo.touched">
+					<p *ngIf="titulo.getError('required')" class="alert alert-danger">Campo obrigatório</p>
+					<p *ngIf="titulo.getError('minlength')" class="alert alert-danger">Min. {{titulo.getError('minlength').requiredLength}} caractéres</p>
+				</div>
 			</div>
 
 			<div class="form-group">
 				<label for="">Url</label>
-				<input  class="form-control" required>
-				<p class="alert alert-danger">Campo obrigatório</p>
+				<input formControlName="url" class="form-control" required>
+				<div *ngIf="url.touched">
+					<p *ngIf="url.getError('required')" class="alert alert-danger">Campo obrigatório</p>
+				</div>
 			</div>
 
 
 			<div class="form-group">
 				<label for="">Descrição</label>
-				<textarea class="form-control"  required></textarea>
-				<p  class="alert alert-danger">Campo obrigatório</p>
+				<textarea formControlName="descricao" class="form-control"  required></textarea>
 			</div>
 
 			<a routerLink="" class="btn btn-secondary mr-2">Voltar</a>

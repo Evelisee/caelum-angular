@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Foto } from '../foto/foto';
 import { FotoService } from '../service/foto.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'caelumpic-cadastro',
@@ -12,7 +12,11 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 export class CadastroComponent implements OnInit {
 
   foto = new Foto();
-  formCadastro: FormGroup
+  formCadastro: FormGroup;
+  titulo = new FormControl('', 
+    Validators.compose([Validators.required, Validators.minLength(2)])
+  );
+  url = new FormControl('', Validators.required);
 
   constructor(
     private fotoService : FotoService,
@@ -24,17 +28,18 @@ export class CadastroComponent implements OnInit {
   ngOnInit() {
 
     this.formCadastro = this.formBuilder.group({
-      titulo:  '',
-      url: '',
-      descricao: ''
+      titulo:  this.titulo,
+      url: this.url,
+      descricao: ['', Validators.required]
     })
 
 
     let fotoId = this.rotaAtivada.snapshot.params.id;
     if(fotoId){
       this.fotoService.buscar(fotoId).subscribe(
-        (resp) => {      
-        this.foto = resp;
+        (resp) => {
+          this.foto = resp;
+          this.formCadastro.patchValue(resp);
         }
       );
     }
@@ -42,6 +47,8 @@ export class CadastroComponent implements OnInit {
 
 
   cadastrarFoto(){
+    this.foto = {...this.foto, ...this.formCadastro.value };
+    
     if(this.foto._id){
       this.fotoService.editar(this.foto).subscribe(resp => {
         this.roteador.navigate(['']);
