@@ -9,6 +9,7 @@ import { ListagemComponent } from './listagem/listagem.component';
 import { CadastroComponent } from './cadastro/cadastro.component';
 import { ModuloRoteamento } from './app.routes';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FiltroPorTitulo } from './listagem/filtroportitulo.pipe';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     ListagemComponent,
     CadastroComponent,
+    FiltroPorTitulo
   ],
   imports: [
     BrowserModule,
